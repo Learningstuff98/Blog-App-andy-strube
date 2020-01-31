@@ -33,7 +33,7 @@ RSpec.describe SubblogsController, type: :controller do
           description: 'this subblog is all about cooking'
         }
       }
-      expect(response).to redirect_to root_path
+      expect(response).to have_http_status(:found)
       subblog = user.subblogs.last
       expect(subblog.name).to eq("cooking")
       expect(subblog.description).to eq('this subblog is all about cooking')
@@ -50,6 +50,16 @@ RSpec.describe SubblogsController, type: :controller do
         }
       }
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "a non user should not be able to make a subblog" do
+      post :create, params: {
+        subblog: {
+          name: 'cooking',
+          description: 'this subblog is all about cooking'
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
     end
   end
 

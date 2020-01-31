@@ -18,7 +18,7 @@ class SubblogsController < ApplicationController
   def create
     @subblog = current_user.subblogs.create(subblog_params)
     if @subblog.valid?
-      redirect_to root_path
+      redirect_to subblog_path(@subblog)
     else
       render :new, status: :unprocessable_entity
     end
