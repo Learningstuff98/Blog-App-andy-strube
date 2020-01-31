@@ -1,0 +1,31 @@
+<% if current_user %>
+  <div class="page-content">
+    <%= link_to "Add a New Subblog", new_subblog_path, class: "btn btn-primary make-it-green" %>
+    <br/><br/>
+  </div>
+<% end %>
+
+<div class="page-content">
+  <%= simple_form_for :search, url: root_path, method: "GET", html: { class: 'form-inline' } do |f| %>
+    <%= f.input :name, input_html: {value: ""} %>   
+    <%= f.submit "Search For a Subblog", class: "btn btn-primary make-it-green" %>
+  <% end %>
+
+  <br/>
+
+  <div class="pagination">
+    <% if @subblogs.previous_page %>
+      <%= link_to "< Previous [", params.permit(:page).merge(:page => @subblogs.previous_page ) %>
+    <% end %>
+    Page <%= @subblogs.current_page %> of <%= @subblogs.total_pages %>
+    <% if @subblogs.next_page %>
+      <%= link_to "] Next >", params.permit(:page).merge(:page => @subblogs.next_page ) %>
+    <% end %>
+  </div>
+
+  <h1>Subblogs:</h1>
+  <% @subblogs.each do |subblog| %>
+    <h3><%= link_to subblog.name, subblog_path(subblog) %></h3>
+    <h6><%= subblog.description %></h6>
+  <% end %>
+</div>

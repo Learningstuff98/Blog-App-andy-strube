@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blogster</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <div id="flex-content-container">
+      <nav class="navbar fixed-top navbar-toggleable-md header-color">
+        <div id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+          <span> 
+            <div class="nav-item">
+              <div class="homepage_link">
+                <%= link_to 'Go to Homepage', root_path %>
+              </div>
+              <div>
+                <% if !current_user %>
+                  <%= link_to 'Sign up', new_user_registration_path %>
+                  <br/>
+                  <%= link_to 'Log in', new_user_session_path %>
+                <% end %>
+                <% if current_user %>
+                  <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+                <% end %>
+              </div>
+              </span>
+            </div>
+          </ul>
+        </div>
+      </nav>
+      <br/><br/>
+
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+
+      <%= yield %>
+    </div>
+
+    <div id="footer"></div>
+
+  </body>
+</html>

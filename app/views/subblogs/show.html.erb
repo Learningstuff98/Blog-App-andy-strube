@@ -1,0 +1,28 @@
+<h1 class="page-content subblog-info"><%= @subblog.name %></h1>
+<br/>
+<h3 class='page-content subblog-info'><%= @subblog.description %></h3>
+<br/>
+
+<div class="page-content">
+  <% if current_user %>
+    <%= link_to "Post a new blog for the #{@subblog.name} subblog", new_subblog_blog_path(@subblog), class: 'btn btn-primary' %>
+    <br/><br/>
+  <% end %>
+
+  <div class="pagination">
+    <% if @blogs.previous_page %>
+      <%= link_to "< Previous [", params.permit(:page).merge(:page => @blogs.previous_page ) %>
+    <% end %>
+    Page <%= @blogs.current_page %> of <%= @blogs.total_pages %>
+    <% if @blogs.next_page %>
+      <%= link_to "] Next >", params.permit(:page).merge(:page => @blogs.next_page ) %>
+    <% end %>
+  </div>
+  <br/>
+
+  <% @blogs.each do |blog| %>
+    <h4><%= link_to blog.title, subblog_blog_path(@subblog, blog), class: "make-it-green" %></h4>
+    <%= "By #{blog.user.username}" %>
+    <br/><br/>
+  <% end %>
+</div>

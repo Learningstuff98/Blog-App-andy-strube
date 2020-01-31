@@ -1,0 +1,80 @@
+@import "bootstrap";
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(85, 82, 83, 0.9);
+}
+
+#flex-content-container {
+  flex: 1;
+}
+
+#footer {
+  position: relative;
+  width: 100%;
+  min-height: 70px;
+  background-color: rgba(24, 21, 22, 0.9);
+  padding: 10px 0px;
+  margin-top: 30px;
+}
+
+#footer a {
+  color: #00C122;
+  font-weight: 100;
+}
+
+.header-color {
+  background-color: rgba(24, 21, 22, 0.9);
+}
+
+.homepage_link a {
+  font-size: 24px;
+  color: #00C122;
+}
+
+.make-it-green {
+  color: #00C122;
+}
+
+.pagination {
+  color: #00C122;
+  font-size: 20px;
+}
+
+.page-content {
+  margin-left: 20px;
+}
+
+.box {
+  padding: 10px;
+  border: 2px solid;
+  border-color: #00C122;
+  border-radius: 10px;
+}
+
+.container{
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.subblog-info {
+  color: rgb(41, 41, 41);
+}
+
+.blog-content {
+  font-size: 20px;
+  font-weight: 500; 
+}
