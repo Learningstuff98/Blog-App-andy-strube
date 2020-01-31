@@ -1,6 +1,9 @@
 FactoryBot.define do
   factory :blog do
-    
+    title {'blog title'}
+    content {'this is the blog content'}
+    association :user
+    association :subblog
   end
 
   factory :user do
