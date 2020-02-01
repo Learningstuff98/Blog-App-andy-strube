@@ -1,0 +1,16 @@
+<h1><%= @user.username %></h1>
+
+<div class="pagination">
+  <% if @blogs.previous_page %>
+    <%= link_to "< Previous [", params.permit(:page).merge(:page => @blogs.previous_page ) %>
+  <% end %>
+  Page <%= @blogs.current_page %> of <%= @blogs.total_pages %>
+  <% if @blogs.next_page %>
+    <%= link_to "] Next >", params.permit(:page).merge(:page => @blogs.next_page ) %>
+  <% end %>
+</div>
+<br/>
+
+<% @blogs.each do |blog| %>
+  <h4><%= blog.title %></h4>
+<% end %>
