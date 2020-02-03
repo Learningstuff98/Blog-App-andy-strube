@@ -22,7 +22,7 @@
 
   <% @blogs.each do |blog| %>
     <h4><%= link_to blog.title, subblog_blog_path(@subblog, blog), class: "make-it-green" %></h4>
-    <%= "By " %>
+    <%= "#{blog.time_since_post} by " %>
     <%= link_to "#{blog.user.username}", user_path(blog.user), class: "make-it-green" %>
     <br/><br/>
   <% end %>

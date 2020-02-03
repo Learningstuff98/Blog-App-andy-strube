@@ -14,7 +14,8 @@
 
   <% @blogs.each do |blog| %>
     <h4><%= link_to "#{blog.title}", subblog_blog_path(blog.subblog, blog), class: "make-it-green" %></h4>
-    <br/>
+    <%= "#{blog.time_since_post}" %>
+    <br/><br/>
   <% end %>
 
 </div>

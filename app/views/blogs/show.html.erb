@@ -3,40 +3,7 @@
   <br/><br/>
   <h1><%= @blog.title %></h1>
   <div class="user-profile-link">
-    <% seconds = (Time.now - @blog.created_at).to_i %>
-    <% minutes = (seconds / 60).to_i %>
-    <% hours = (minutes / 60).to_i %>
-    <% days = (hours / 24).to_i %>
-    <% weeks = (days / 7).to_i %>
-    <% months = (weeks / 4.333).to_i %>
-    <% years = (weeks / 52).to_i %>
-    <% if seconds < 60 %>
-      <%= "less than a minute ago by " %>
-    <% elsif minutes < 2 %>
-      <%= "a minute ago by " %>
-    <% elsif minutes < 60 %>
-      <%= "#{minutes} minutes ago by " %>
-    <% elsif hours < 2 %>
-      <%= "an hour ago by " %>
-    <% elsif hours < 24 %>
-      <%= "#{hours} hours ago by " %>
-    <% elsif days < 2 %>
-      <%= "a day ago by " %>
-    <% elsif days < 7 %>
-      <%= "#{days} days ago by " %>
-    <% elsif weeks < 2 %>
-      <%= "a week ago by " %>
-    <% elsif weeks < 4.333 %>
-      <%= "#{weeks} weeks ago by " %>
-    <% elsif months < 2 %>
-      <%= "a month ago by " %>
-    <% elsif months < 12 %>
-      <%= "#{months} months ago by " %>
-    <% elsif years < 2 %>
-      <%= "a year ago by " %>
-    <% else %>
-      <%= "#{years} years ago by " %>   
-    <% end %>
+    <%= "#{@blog.time_since_post} by " %>
     <%= link_to "#{@blog.user.username}", user_path(@blog.user), class: "make-it-green" %>
   </div>
   <div class="box col-7 blog-content">
