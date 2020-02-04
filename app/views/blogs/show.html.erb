@@ -9,4 +9,8 @@
   <div class="box col-7 blog-content">
     <%= @blog.content %>
   </div>
+  <% if current_user == @blog.user %>
+    <br/>
+    <%= link_to "edit this post", edit_subblog_blog_path(@subblog, @blog), class: " btn btn-primary make-it-green" %>
+  <% end %>
 </div>

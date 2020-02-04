@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit]
 
   def new
     @blog = Blog.new
@@ -12,6 +12,14 @@ class BlogsController < ApplicationController
       redirect_to subblog_blog_path(@subblog, @blog)
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:id])
+    if current_user != @blog.user
+      redirect_to subblog_blog_path(@subblog, @blog)
     end
   end
 

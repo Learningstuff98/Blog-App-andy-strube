@@ -54,4 +54,30 @@ RSpec.describe BlogsController, type: :controller do
     end
   end
 
+  describe "blogs#edit action" do
+    it "should successfully show the page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      sign_in blog.user
+      get :edit, params: { id: blog.id, subblog_id: subblog.id }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should not allow a user who didn't make the blog post get to the edit page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :edit, params: { id: blog.id, subblog_id: subblog.id }
+      expect(response).to have_http_status(:found)
+    end
+
+    it "should require a non user to the sign in page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      get :edit, params: { id: blog.id, subblog_id: subblog.id }
+      expect(response).to redirect_to new_user_session_path
+    end
+  end
+
 end
