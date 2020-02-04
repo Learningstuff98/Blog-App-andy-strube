@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def new
     @blog = Blog.new
@@ -19,6 +19,17 @@ class BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
     if current_user != @blog.user
+      redirect_to subblog_blog_path(@subblog, @blog)
+    end
+  end
+
+  def update
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:id])
+    if @blog.user == current_user
+      @blog.update_attributes(blog_params)
+      redirect_to subblog_blog_path(@subblog, @blog)
+    else
       redirect_to subblog_blog_path(@subblog, @blog)
     end
   end

@@ -19,7 +19,7 @@ RSpec.describe BlogsController, type: :controller do
   end
 
   describe "blogs#create action" do
-    it "should allow users to create blogs posts" do
+    it "should allow users to create blog posts" do
       subblog = FactoryBot.create(:subblog)
       user = FactoryBot.create(:user)
       sign_in user
@@ -77,6 +77,59 @@ RSpec.describe BlogsController, type: :controller do
       blog = FactoryBot.create(:blog)
       get :edit, params: { id: blog.id, subblog_id: subblog.id }
       expect(response).to redirect_to new_user_session_path
+    end
+  end
+
+  describe "blogs#update action" do
+    it "The user that posted the blog should be able to update it" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      sign_in blog.user
+      patch :update, params: { 
+        id: blog.id, 
+        subblog_id: subblog.id,
+        blog: {
+          title: "edited title",
+          content: "edited content"
+        }
+      }
+      expect(response).to have_http_status(:found)
+      blog.reload
+      expect(blog.title).to eq "edited title"
+      expect(blog.content).to eq "edited content"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      patch :update, params: {
+        id: blog.id, 
+        subblog_id: subblog.id,
+        blog: {
+          title: "edited title",
+          content: "edited content"
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "a user that didn't post the blog shouldn't be able to update it" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      patch :update, params: {
+        id: blog.id, 
+        subblog_id: subblog.id,
+        blog: {
+          title: "edited title",
+          content: "edited content"
+        }
+      }
+      expect(response).to have_http_status(:found)
+      blog.reload
+      expect(blog.title).to eq "blog title"
+      expect(blog.content).to eq "this is the blog content"
     end
   end
 
