@@ -19,7 +19,7 @@ class BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
     if current_user != @blog.user
-      redirect_to subblog_blog_path(@subblog, @blog)
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
@@ -30,7 +30,7 @@ class BlogsController < ApplicationController
       @blog.update_attributes(blog_params)
       redirect_to subblog_blog_path(@subblog, @blog)
     else
-      redirect_to subblog_blog_path(@subblog, @blog)
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
