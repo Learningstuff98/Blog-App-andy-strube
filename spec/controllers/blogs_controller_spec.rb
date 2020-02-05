@@ -119,14 +119,13 @@ RSpec.describe BlogsController, type: :controller do
       user = FactoryBot.create(:user)
       sign_in user
       patch :update, params: {
-        id: blog.id, 
+        id: blog.id,
         subblog_id: subblog.id,
         blog: {
           title: "edited title",
           content: "edited content"
         }
       }
-      expect(response).to have_http_status(:unauthorized)
       blog.reload
       expect(blog.title).to eq "blog title"
       expect(blog.content).to eq "this is the blog content"

@@ -29,8 +29,6 @@ class BlogsController < ApplicationController
     if @blog.user == current_user
       @blog.update_attributes(blog_params)
       redirect_to subblog_blog_path(@subblog, @blog)
-    else
-      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
