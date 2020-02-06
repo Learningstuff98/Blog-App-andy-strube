@@ -1,7 +1,7 @@
 <div class="container">
   <div class="box col-10">
     <h2>Create a New Subblog</h2>
-    <%= simple_form_for @subblog do |f|%>
+    <%= simple_form_for @subblog, url: moderator_subblogs_path do |f|%>
       <%= f.input :name %>
       <br />
       <%= f.input :description %>

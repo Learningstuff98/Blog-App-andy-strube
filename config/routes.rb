@@ -1,7 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users, only: :show
-  resources :subblogs do
+  # namespace :moderator do
+  #   resources :subblogs, only: [:new, :create]
+  # end
+
+
+  namespace :moderator do
+    resources :subblogs, only: [:new, :create]
+  end
+
+
+
+
+  resources :subblogs, only: [:index, :show] do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
