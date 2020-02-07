@@ -72,7 +72,7 @@ RSpec.describe BlogsController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
 
-    it "should require a non user to the sign in page" do
+    it "should redirect a non user to the sign in page" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       get :edit, params: { id: blog.id, subblog_id: subblog.id }
