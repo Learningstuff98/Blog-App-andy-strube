@@ -1,20 +1,7 @@
-<h1 class="page-content subblog-info"><%= @subblog.name %></h1>
-<br/>
-<h3 class='page-content subblog-info'><%= @subblog.description %></h3>
-<br/>
-<h3 class='page-content subblog-info'><%= "Moderator: #{@subblog.user.username}" %></h3>
-<br/>
-
 <div class="page-content">
-  <% if current_user %>
-    <%= link_to "Post a new blog for the #{@subblog.name} subblog", new_subblog_blog_path(@subblog), class: 'btn btn-primary make-it-green' %>
-    <br/><br/>  
-  <% end %>
-
-  <% if current_user == @subblog.user %>
-    <%= link_to "view subblog as moderator", moderator_subblog_path(@subblog), class: 'btn btn-primary make-it-green' %>
-    <br/><br/>
-  <% end %>
+  <h1><%= @subblog.name %></h1>
+  <h2><%= @subblog.description %></h2>
+  <h2><%= "Moderator: #{@subblog.user.username}" %></h2>
 
   <div class="pagination">
     <% if @blogs.previous_page %>
@@ -33,4 +20,5 @@
     <%= link_to "#{blog.user.username}", user_path(blog.user), class: "make-it-green" %>
     <br/><br/>
   <% end %>
+
 </div>
