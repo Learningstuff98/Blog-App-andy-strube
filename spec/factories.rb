@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :comment do
+    
+  end
+
   factory :blog do
     title {'blog title'}
     content {'this is the blog content'}
