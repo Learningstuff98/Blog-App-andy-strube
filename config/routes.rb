@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   resources :subblogs, only: [:index, :show] do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:new, :create]
+      resources :comments, only: [:create]
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
