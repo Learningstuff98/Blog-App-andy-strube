@@ -4,6 +4,7 @@ class Moderator::BlogsController < ApplicationController
   def show
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
+    @comment = Comment.new
   end
 
   def destroy

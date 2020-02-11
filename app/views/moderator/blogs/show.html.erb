@@ -16,12 +16,23 @@
   <br/>
 
   <%=
-    link_to "as a moderator delete this post",
+    link_to "as a moderator, delete this post",
     moderator_subblog_blog_path(@subblog, @blog),
     method: :delete, data: { confirm: "Are you sure that you want to delete #{@blog.user.username}'s blog post?" },
     class: "btn btn-primary make-it-green"
   %>
   <br/><br/>
+
+  <% if current_user == @subblog.user %>
+    <div class="col-7 comment-form">
+      <br/>
+      <%= simple_form_for @comment, url: moderator_subblog_blog_comments_path(@subblog, @blog) do |f|%>
+        <%= f.input :message, label: "Total comments: #{@blog.comments.count}", placeholder: "Add a comment" %>
+        <%= f.submit 'as a moderator, post a comment', class: 'btn btn-primary make-it-green' %>
+      <% end %>
+    </div>
+    <br/>
+  <% end %>
 
   <% @blog.comments.each do |comment| %>
     <h5><%= comment.message %></h5>

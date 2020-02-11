@@ -32,4 +32,32 @@ RSpec.describe Moderator::CommentsController, type: :controller do
       expect(comment.message).to eq "comment message"
     end
   end
+
+  describe "comments#create action" do
+    it "moderators should be able to post comments from the moderator namespace" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      sign_in subblog.user
+      post :create, params: { subblog_id: subblog.id, blog_id: blog.id, comment: { message: 'this is a comment' } }
+      expect(response).to have_http_status(:found)
+      expect(blog.comments.length).to eq 1
+      expect(blog.comments.first.message).to eq "this is a comment"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      post :create, params: { subblog_id: subblog.id, blog_id: blog.id, comment: { message: 'this is a comment' } }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only allow the subblog's moderator post a comment from the moderator namespace" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      post :create, params: { subblog_id: subblog.id, blog_id: blog.id, comment: { message: 'this is a comment' } }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
