@@ -1,6 +1,7 @@
 <div class="page-content">
   <%= link_to "Go to the #{@subblog.name} subblog", subblog_path(@subblog), class: "btn btn-primary make-it-green" %>
   <br/><br/>
+
   <h5><%= "Moderator: #{@subblog.user.username}" %></h5>
   <h1><%= @blog.title %></h1>
 
@@ -38,7 +39,14 @@
   <% end %>
 
   <% @blog.comments.each do |comment| %>
-    <h5><%= comment.message %></h5>
+    <div class="comment-info">
+      <%= link_to "#{comment.user.username}", user_path(comment.user), class: "make-it-green" %>
+      <%= "#{comment.time_since_post}" %>
+      <br/>
+    </div>
+    <div class="comment col-7">
+      <%= comment.message %>
+    </div>
     <br/>
   <% end %>
 

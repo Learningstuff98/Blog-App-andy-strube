@@ -35,13 +35,22 @@
   <% end %>
 
   <% @blog.comments.each do |comment| %>
-    <h5><%= comment.message %></h5>
-    <%= 
-      link_to "as a moderator, delete this comment",
-      moderator_subblog_blog_comment_path(@subblog, @blog, comment),
-      method: :delete, data: { confirm: "Are you sure that you want to delete this comment?" },
-      class: "make-it-green"
-    %>
+    <div class="comment-info">
+      <%= link_to "#{comment.user.username}", user_path(comment.user), class: "make-it-green" %>
+      <%= "#{comment.time_since_post}" %>
+      <br/>
+    </div>
+    <div class="comment col-7">
+      <%= comment.message %>
+    </div>
+    <% if current_user == @subblog.user%>
+      <%=
+        link_to "as a moderator, delete this comment",
+        moderator_subblog_blog_comment_path(@subblog, @blog, comment),
+        method: :delete, data: { confirm: "Are you sure that you want to delete this comment?" },
+        class: "make-it-green"
+      %>
+    <% end %>
     <br/><br/>
   <% end %>
 
