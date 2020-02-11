@@ -15,10 +15,4 @@ class Moderator::BlogsController < ApplicationController
     end
   end
 
-  private
-
-  def blog_params
-    params.require(:blog).permit(:content, :title)
-  end
-
 end

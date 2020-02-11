@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :comment do
-    
+    message {"comment message"}
+    association :user
+    association :blog
   end
 
   factory :blog do

@@ -3,19 +3,35 @@
   <br/><br/>
   <h2><%= "#{@subblog.user.username}, you're currently in moderator mode for the #{@subblog.name} subblog" %></h2>
   <br/>
+
   <h1><%= @blog.title %></h1>
   <div class="user-profile-link">
     <%= "#{@blog.time_since_post} by " %>
     <%= link_to "#{@blog.user.username}", user_path(@blog.user), class: "make-it-green" %>
   </div>
+
   <div class="box col-7 blog-content">
     <%= @blog.content %>
   </div>
   <br/>
+
   <%=
     link_to "as a moderator delete this post",
     moderator_subblog_blog_path(@subblog, @blog),
-    method: :delete, data: { confirm: "Are you sure that you want to delete #{@blog.user.username}'s' blog post?" },
+    method: :delete, data: { confirm: "Are you sure that you want to delete #{@blog.user.username}'s blog post?" },
     class: "btn btn-primary make-it-green"
   %>
+  <br/><br/>
+
+  <% @blog.comments.each do |comment| %>
+    <h5><%= comment.message %></h5>
+    <%= 
+      link_to "as a moderator, delete this comment",
+      moderator_subblog_blog_comment_path(@subblog, @blog, comment),
+      method: :delete, data: { confirm: "Are you sure that you want to delete this comment?" },
+      class: "make-it-green"
+    %>
+    <br/><br/>
+  <% end %>
+
 </div>
