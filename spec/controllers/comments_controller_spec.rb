@@ -22,7 +22,7 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
-  describe "comments@destroy action" do
+  describe "comments#destroy action" do
     it "should allow the person who posted the comment to delete it" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
@@ -49,6 +49,35 @@ RSpec.describe CommentsController, type: :controller do
       user = FactoryBot.create(:user)
       sign_in user
       delete :destroy, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe "comments#edit action" do
+    it "should successfully show the page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      sign_in comment.user
+      get :edit, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      get :edit, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only allow the comment's user get to its edit page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :edit, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
       expect(response).to have_http_status(:unauthorized)
     end
   end
