@@ -82,4 +82,57 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  describe "comments#update action" do
+    it "should allow users to update their comments" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      sign_in comment.user
+      post :update, params: {
+        id: comment.id,
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment: {
+          message: "updated comment message"
+        }
+      }
+      comment.reload
+      expect(comment.message).to eq "updated comment message"
+      expect(response).to have_http_status(:found)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      post :update, params: {
+        id: comment.id,
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment: {
+          message: "updated comment message"
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let the comment's user update it" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      user = FactoryBot.create(:user)
+      sign_in user
+      post :update, params: {
+        id: comment.id,
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment: {
+          message: "updated comment message"
+        }
+      }
+      comment.reload
+      expect(comment.message).to eq "comment message"
+    end
+  end
+
 end

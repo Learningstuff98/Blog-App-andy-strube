@@ -1,4 +1,8 @@
-<h1>Edit your comment here</h1>
-<%= @comment.message %>
-<br/>
-<%= @comment.user.username %>
+<div class="container">
+  <div class="box col-10">
+    <%= simple_form_for @comment, url: subblog_blog_comment_path do |f|%>
+      <%= f.input :message, label: "Edit Your Comment", class: "edit-lable" %>
+      <%= f.submit 'Post Edit', class: 'btn btn-primary make-it-green' %>
+    <% end %>
+  </div>
+</div>

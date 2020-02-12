@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy, :edit]
+  before_action :authenticate_user!, only: [:create, :destroy, :edit, :update]
   
   def create
     @subblog = Subblog.find(params[:subblog_id])
@@ -26,6 +26,16 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if current_user != @comment.user
       render plain: 'Unauthorized', status: :unauthorized
+    end
+  end
+
+  def update
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:blog_id])
+    @comment = Comment.find(params[:id])
+    if current_user == @comment.user
+      @comment.update_attributes(comment_params)
+      redirect_to subblog_blog_path(@subblog, @blog)
     end
   end
 
