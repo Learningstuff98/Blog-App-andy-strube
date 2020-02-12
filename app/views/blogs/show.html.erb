@@ -42,6 +42,9 @@
     <div class="comment-info">
       <%= link_to "#{comment.user.username}", user_path(comment.user), class: "make-it-green" %>
       <%= "#{comment.time_since_post}" %>
+      <% if comment.user == @blog.user %>
+        <%= " by the blog author" %>
+      <% end %>
       <br/>
     </div>
     <div class="comment col-7">
