@@ -26,6 +26,9 @@
   <h1>Subblogs:</h1>
   <% @subblogs.each do |subblog| %>
     <h3><%= link_to subblog.name, subblog_path(subblog) %></h3>
-    <h6><%= subblog.description %></h6>
+    <h4><%= subblog.description %></h4>
+    <h6 class="make-it-green"><%= "Moderated by: #{subblog.user.username}" %></h6>
+    <h6 class="make-it-green"><%= "Total blog posts: #{subblog.blogs.count}" %></h6>
+    <br/>
   <% end %>
 </div>
