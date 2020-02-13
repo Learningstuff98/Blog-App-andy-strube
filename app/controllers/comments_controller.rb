@@ -21,8 +21,6 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @subblog = Subblog.find(params[:subblog_id])
-    @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:id])
     if current_user != @comment.user
       render plain: 'Unauthorized', status: :unauthorized
