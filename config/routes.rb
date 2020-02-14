@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   end
   resources :subblogs, only: [:index, :show] do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:create, :destroy, :edit, :update]
+      resources :comments, only: [:create, :destroy, :edit, :update, :show] do
+        resources :responses, only: [:new, :create]
+      end
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

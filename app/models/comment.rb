@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
   belongs_to :blog
   belongs_to :user
+  has_many :responses
 
   def time_since_post
     seconds = (Time.now - self.created_at).to_i

@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :response do
+    
+  end
+
   factory :comment do
     message {"comment message"}
     association :user
