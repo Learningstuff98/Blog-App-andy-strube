@@ -3,6 +3,8 @@ class Comment < ApplicationRecord
   belongs_to :user
   has_many :responses
 
+  validates :message, presence: true, length: { minimum: 1 }
+
   def time_since_post
     seconds = (Time.now - self.created_at).to_i
     minutes = (seconds / 60).to_i
