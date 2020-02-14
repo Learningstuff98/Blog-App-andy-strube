@@ -54,6 +54,7 @@
         class: "make-it-green"
       %>
     <% end %>
+    <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id }) %>
     <br/><br/>
   <% end %>
 
