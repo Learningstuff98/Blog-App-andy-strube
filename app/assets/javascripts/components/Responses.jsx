@@ -12,14 +12,14 @@ class Responses extends React.Component {
   }
 
   getCommentResponses() {
-    axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
-    //axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    //axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
     .then((res) =>
-      this.renderResponses(res)
+      this.setResponsesInState(res)
     )
   }
 
-  renderResponses(res) {
+  setResponsesInState(res) {
     const responses =  res.data.map((response) => {
       return <div><span>{response.response_message}</span></div>;
     });
@@ -28,7 +28,7 @@ class Responses extends React.Component {
     });
   }
 
-  invertState() {
+  invertResponseViewStatus() {
     this.setState({
       responsesAreToBeViewed: !this.state.responsesAreToBeViewed
     });
@@ -41,14 +41,14 @@ class Responses extends React.Component {
           {this.state.responses.map((response) => {
             return response;
           })}
-          <button onClick={() => this.invertState()}>
+          <button onClick={() => this.invertResponseViewStatus()}>
             hide replies
           </button>
         </div>
       );
     } else {
       return(
-        <button onClick={() => this.invertState()}>
+        <button onClick={() => this.invertResponseViewStatus()}>
           view replies
         </button>
       );
