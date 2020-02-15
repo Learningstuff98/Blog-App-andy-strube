@@ -21,7 +21,7 @@ class Responses extends React.Component {
 
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
-      return <div><span>{response.response_message}</span></div>;
+      return <div>{response.response_message}<br/><br/></div>;
     });
     this.setState({
       responses,
@@ -37,7 +37,7 @@ class Responses extends React.Component {
   render() {
     if(this.state.responsesAreToBeViewed) {
       return(
-        <div className="comment">
+        <div className="response">
           {this.state.responses.map((response) => {
             return response;
           })}
