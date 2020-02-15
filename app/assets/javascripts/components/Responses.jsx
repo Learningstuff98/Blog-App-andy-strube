@@ -38,20 +38,26 @@ class Responses extends React.Component {
     if(this.state.responsesAreToBeViewed) {
       return(
         <div className="response">
+          <br/>
           {this.state.responses.map((response) => {
             return response;
           })}
-          <button onClick={() => this.invertResponseViewStatus()}>
+          <div className="make-it-green response-button" onClick={() => this.invertResponseViewStatus()}>
             hide replies
-          </button>
+          </div>
+        </div>
+      );
+    } else if(this.state.responses.length > 0) {
+      return(
+        <div>
+          <div className="make-it-green">Total replies: {this.state.responses.length}</div>
+          <span className="make-it-green response-button" onClick={() => this.invertResponseViewStatus()}>
+            view replies
+          </span>
         </div>
       );
     } else {
-      return(
-        <button onClick={() => this.invertResponseViewStatus()}>
-          view replies
-        </button>
-      );
+      return(<div></div>);
     }
   }
 }
