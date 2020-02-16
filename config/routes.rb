@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :subblogs, only: [:index, :show] do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy, :edit, :update, :show] do
-        resources :responses, only: [:new, :create]
+        resources :responses, only: [:new, :create, :show, :destroy]
       end
     end
   end
