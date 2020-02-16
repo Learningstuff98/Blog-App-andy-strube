@@ -2,14 +2,9 @@ class ResponsesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:destroy]
   before_action :authenticate_user!
 
-  def show
+  def show #needs test
     response = Response.find(params[:id])
     render json: response.as_json()
-  end
-
-  def destroy
-    response = Response.find_by_id(params[:id])
-    response.destroy if response
   end
 
   def new

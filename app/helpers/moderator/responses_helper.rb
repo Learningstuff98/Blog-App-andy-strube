@@ -1,0 +1,2 @@
+module Moderator::ResponsesHelper
+end

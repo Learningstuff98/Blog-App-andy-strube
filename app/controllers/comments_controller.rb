@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def show
+  def show # needs test
     comment = Comment.find(params[:id])
     render json: comment.responses.as_json()
   end

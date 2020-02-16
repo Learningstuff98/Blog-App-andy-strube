@@ -1,4 +1,4 @@
-class Responses extends React.Component {
+class ResponsesForModerator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,9 +19,27 @@ class Responses extends React.Component {
     )
   }
 
+  deleteResponseInstance(responseComment) {
+    //axios.delete('http://localhost:3000/moderator/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    axios.delete('https://blog-app-andy-strube.herokuapp.com/moderator/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    .catch((err) => console.log(err.response.data));
+    this.getCommentResponses();
+  }
+
+  handleCommentResponseDeletion(response) {
+    this.deleteResponseInstance(response);
+    this.getCommentResponses();
+  }
+
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
-      return <div>{response.response_message}<br/><br/></div>;
+      return <div>
+        {response.response_message}
+        <button onClick={() => this.handleCommentResponseDeletion(response)} className="btn btn-link make-it-green">
+          delete this reply comment
+        </button>
+        <br/><br/>
+      </div>;
     });
     this.setState({
       responses,
