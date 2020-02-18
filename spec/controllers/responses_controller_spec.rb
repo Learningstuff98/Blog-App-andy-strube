@@ -70,13 +70,14 @@ RSpec.describe ResponsesController, type: :controller do
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
       response_comment = FactoryBot.create(:response)
+      sign_in response_comment.user
       get :show, params: {
         subblog_id: subblog.id,
         blog_id: blog.id,
         comment_id: comment.id,
         id: response_comment.id
       }
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:success)
     end
   end
 end
