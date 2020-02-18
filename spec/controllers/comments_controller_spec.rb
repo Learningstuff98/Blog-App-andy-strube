@@ -135,4 +135,19 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  describe "comments#show action" do
+    it "should work" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      sign_in comment.user
+      get :show, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end

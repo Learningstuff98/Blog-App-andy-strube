@@ -63,4 +63,20 @@ RSpec.describe ResponsesController, type: :controller do
       expect(response).to redirect_to new_user_session_path
     end
   end
+
+  describe "responses#show action" do
+    it "should work" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      response_comment = FactoryBot.create(:response)
+      get :show, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: response_comment.id
+      }
+      expect(response).to have_http_status(:found)
+    end
+  end
 end

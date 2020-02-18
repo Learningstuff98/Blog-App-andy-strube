@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy, :edit, :update]
+  before_action :authenticate_user!
   
   def create
     @subblog = Subblog.find(params[:subblog_id])
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def show # needs test
+  def show
     comment = Comment.find(params[:id])
     render json: comment.responses.as_json()
   end
