@@ -19,6 +19,7 @@ class ResponsesController < ApplicationController
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:comment_id])
     @response = @comment.responses.create(response_params.merge(user: current_user))
+    @response.update_attribute(:username, @response.user.username)
     redirect_to subblog_blog_path(@subblog, @blog)
   end
 
