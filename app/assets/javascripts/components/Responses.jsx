@@ -12,8 +12,8 @@ class Responses extends React.Component {
   }
 
   getCommentResponses() {
-    //axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
-    axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    //axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
     .then((res) =>
       this.setResponsesInState(res)
     )
@@ -21,20 +21,25 @@ class Responses extends React.Component {
   }
 
   deleteResponseInstance(responseComment) {
-    //axios.delete('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
-    axios.delete('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    axios.delete('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    //axios.delete('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
     .then(() => {
       this.getCommentResponses();
     })
     .catch((err) => console.log(err.response.data));
   }
 
-  setDeleteButton(response) {
+  setEditAndDeleteButtons(response) {
+    // const url = 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    const url = 'http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
     let deleteButton;
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
       deleteButton = <div>
         <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
           delete
+        </button>
+        <button className="btn btn-link">
+          <a href={url} className="make-it-green">edit</a>
         </button>
       </div>
     } else {
@@ -50,7 +55,7 @@ class Responses extends React.Component {
           {response.username}
         </div>   
         {response.response_message}
-        {this.setDeleteButton(response)}
+        {this.setEditAndDeleteButtons(response)}
         <br/><br/>
       </div>;
     });

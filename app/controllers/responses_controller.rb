@@ -2,6 +2,16 @@ class ResponsesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:destroy]
   before_action :authenticate_user!
 
+  def edit
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:blog_id])
+    @comment = Comment.find(params[:comment_id])
+    @response = Response.find(params[:id])
+    if current_user != @response.user
+      render plain: 'Unauthorized', status: :unauthorized
+    end
+  end
+
   def destroy
     response = Response.find(params[:id])
     if current_user == response.user

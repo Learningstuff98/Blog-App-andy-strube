@@ -130,4 +130,51 @@ RSpec.describe ResponsesController, type: :controller do
       expect(comment_response.response_message).to eq "response message"
     end
   end
+
+  describe "responses#edit action" do
+    it "should let the responses user get to its edit page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      comment_response = FactoryBot.create(:response)
+      sign_in comment_response.user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: comment_response.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      comment_response = FactoryBot.create(:response)
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: comment_response.id
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let the responses user get to its edit page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      comment_response = FactoryBot.create(:response)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: comment_response.id
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
