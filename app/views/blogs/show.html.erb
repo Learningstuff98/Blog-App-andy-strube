@@ -64,9 +64,11 @@
         <%= link_to "reply", new_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
         <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id }) %>
       </div>
-    <% else %>
+    <% elsif current_user %>
       <%= link_to "reply", new_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
       <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id }) %>
+    <% else %>
+      <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id }) %>
     <% end %>
     <br/><br/>
   <% end %>

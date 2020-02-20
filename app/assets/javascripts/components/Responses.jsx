@@ -32,20 +32,22 @@ class Responses extends React.Component {
   setEditAndDeleteButtons(response) {
     const url = 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
     //const url = 'http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
-    let deleteButton;
+    let editAndDeleteButtons;
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
-      deleteButton = <div>
+      editAndDeleteButtons = <div>
         <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
           delete
         </button>
         <button className="btn btn-link">
           <a href={url} className="make-it-green">edit</a>
         </button>
-      </div>
+      </div>;
+    } else if(this.props.username === null && this.props.user_id === null) {
+      editAndDeleteButtons = <div></div>;
     } else {
-      deleteButton = <div></div>
+      editAndDeleteButtons = <div></div>;
     }
-    return deleteButton;
+    return editAndDeleteButtons;
   }
 
   setResponsesInState(res) {
