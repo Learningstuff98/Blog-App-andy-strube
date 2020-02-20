@@ -1,2 +1,11 @@
-<h1>This is the edit page for the following instance:</h1>
-<h1><%= "#{@response.response_message}" %></h1>
+<h3>Edit your reply</h3>
+
+<div class="container">
+  <div class="box col-10">
+    <%= simple_form_for @response, url: subblog_blog_comment_response_path do |f|%>
+      <%= f.input :response_message, label: "Edit Your Reply", class: "edit-lable" %>
+      <%= f.submit 'Post Edit', class: 'btn btn-primary make-it-green' %>
+    <% end %>
+  </div>
+</div>
+

@@ -12,6 +12,16 @@ class ResponsesController < ApplicationController
     end
   end
 
+  def update
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:blog_id])
+    @response = Response.find(params[:id])
+    if current_user == @response.user
+      @response.update_attributes(response_params)
+      redirect_to subblog_blog_path(@subblog, @blog)
+    end
+  end
+
   def destroy
     response = Response.find(params[:id])
     if current_user == response.user
