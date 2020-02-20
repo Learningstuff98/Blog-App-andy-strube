@@ -17,16 +17,42 @@ class Responses extends React.Component {
     .then((res) =>
       this.setResponsesInState(res)
     )
+    .catch((err) => console.log(err.response.data));
+  }
+
+  deleteResponseInstance(responseComment) {
+    //axios.delete('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    axios.delete('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    .then(() => {
+      this.getCommentResponses();
+    })
+    .catch((err) => console.log(err.response.data));
+  }
+
+  setDeleteButton(response) {
+    let deleteButton;
+    if(this.props.username === response.username && this.props.user_id === response.user_id) {
+      deleteButton = <div>
+        <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
+          delete
+        </button>
+      </div>
+    } else {
+      deleteButton = <div></div>
+    }
+    return deleteButton;
   }
 
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
       return <div>
-      <div className="make-it-green">
-        {response.username}
-      </div>   
-      {response.response_message}
-      <br/><br/></div>;
+        <div className="make-it-green">
+          {response.username}
+        </div>   
+        {response.response_message}
+        {this.setDeleteButton(response)}
+        <br/><br/>
+      </div>;
     });
     this.setState({
       responses,

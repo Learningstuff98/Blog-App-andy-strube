@@ -2,6 +2,13 @@ class ResponsesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:destroy]
   before_action :authenticate_user!
 
+  def destroy
+    response = Response.find(params[:id])
+    if current_user == response.user
+      response.destroy
+    end
+  end
+
   def show
     response = Response.find(params[:id])
     render json: response.as_json()

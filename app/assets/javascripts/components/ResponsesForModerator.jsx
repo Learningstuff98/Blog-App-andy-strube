@@ -17,6 +17,7 @@ class ResponsesForModerator extends React.Component {
     .then((res) =>
       this.setResponsesInState(res)
     )
+    .catch((err) => console.log(err.response.data));
   }
 
   deleteResponseInstance(responseComment) {
