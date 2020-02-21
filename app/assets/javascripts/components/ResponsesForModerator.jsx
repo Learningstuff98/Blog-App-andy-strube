@@ -43,7 +43,7 @@ class ResponsesForModerator extends React.Component {
 
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
-      return <div>
+      return <div className="col-7">
         <div className="make-it-green">
           {response.username}{" "}
           {this.setModeratorIcon(response.username)}
