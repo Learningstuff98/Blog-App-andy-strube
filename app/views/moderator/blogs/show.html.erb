@@ -8,6 +8,9 @@
   <div class="user-profile-link">
     <%= "#{@blog.time_since_post} by " %>
     <%= link_to "#{@blog.user.username}", user_path(@blog.user), class: "make-it-green" %>
+    <% if @blog.user == @subblog.user %>
+      <%= link_to "[M]", '#', class: "make-it-blue" %>
+    <% end %>
   </div>
 
   <div class="box col-7 blog-content">
@@ -37,6 +40,9 @@
   <% @blog.comments.each do |comment| %>
     <div class="comment-info">
       <%= link_to "#{comment.user.username}", user_path(comment.user), class: "make-it-green" %>
+      <% if comment.user == @subblog.user %>
+        <%= link_to "[M]", '#', class: "make-it-blue" %>
+      <% end %>
       <%= "#{comment.time_since_post}" %>
       <% if comment.user == @blog.user %>
         <%= " by the blog author" %>
@@ -54,7 +60,7 @@
         class: "make-it-green"
       %>
     <% end %>
-    <%= react_component("ResponsesForModerator", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id }) %>
+    <%= react_component("ResponsesForModerator", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username }) %>
     <br/><br/>
   <% end %>
 

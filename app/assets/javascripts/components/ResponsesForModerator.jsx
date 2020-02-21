@@ -28,12 +28,25 @@ class ResponsesForModerator extends React.Component {
     }) 
     .catch((err) => console.log(err.response.data));
   }
+  
+  setModeratorIcon(username) {
+    if(username === this.props.moderator_username) {
+      return(
+        <span className="make-it-blue">
+          [M]
+        </span>
+      );
+    } else {
+      return(<div></div>);
+    }
+  }
 
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
       return <div>
         <div className="make-it-green">
-          {response.username}
+          {response.username}{" "}
+          {this.setModeratorIcon(response.username)}
         </div>  
         {response.response_message}
         <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
