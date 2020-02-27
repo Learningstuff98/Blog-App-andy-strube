@@ -50,7 +50,7 @@ class ResponsesForModerator extends React.Component {
         </div>  
         {response.response_message}
         <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
-          delete this reply comment
+          delete
         </button>
         <br/><br/>
       </div>;

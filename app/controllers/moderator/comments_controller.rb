@@ -1,5 +1,13 @@
 class Moderator::CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:destroy, :create]
+  before_action :authenticate_user!
+
+  def edit
+    @subblog = Subblog.find(params[:subblog_id])
+    @comment = Comment.find(params[:id])
+    if current_user != @subblog.user
+      render plain: 'Unauthorized', status: :unauthorized
+    end
+  end
 
   def destroy
     @subblog = Subblog.find(params[:subblog_id])

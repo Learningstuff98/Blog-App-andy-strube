@@ -60,4 +60,45 @@ RSpec.describe Moderator::CommentsController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "comments#edit action" do
+    it "moderators should be able to get to the edit page for their comments" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      sign_in subblog.user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "non moderator users shouldn't be able to get to the edit page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
