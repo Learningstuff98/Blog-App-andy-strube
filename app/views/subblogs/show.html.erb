@@ -32,7 +32,7 @@
     <%= "#{blog.time_since_post} by " %>
     <%= link_to "#{blog.user.username}", user_path(blog.user), class: "make-it-green" %>
     <% if blog.user == @subblog.user %>
-      <%= link_to "[M]", '#', class: "make-it-blue" %>
+      <%= link_to "[M]", user_path(blog.user), class: "make-it-blue" %>
     <% end %>
     <div>
       <%= "Total comment: #{blog.comments.count}" %>
