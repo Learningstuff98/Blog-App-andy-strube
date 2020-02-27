@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
   namespace :moderator do
     resources :subblogs, only: [:new, :create, :show] do
-      resources :blogs, only: [:show, :destroy, :edit] do
+      resources :blogs, only: [:show, :destroy, :edit, :update] do
         resources :comments, only: [:destroy, :create, :edit, :update] do
           resources :responses, only: [:destroy]
         end

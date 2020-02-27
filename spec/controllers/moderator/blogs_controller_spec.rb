@@ -63,7 +63,7 @@ RSpec.describe Moderator::BlogsController, type: :controller do
       expect(response).to redirect_to new_user_session_path
     end
 
-    it "should only let anyone else edit the moderators blog posts" do
+    it "shouldn't let anyone else edit the moderators blog posts" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       user = FactoryBot.create(:user)
@@ -73,6 +73,53 @@ RSpec.describe Moderator::BlogsController, type: :controller do
         id: blog.id
       }
       expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe "blogs#update action" do
+    it "should let moderators update their blog posts" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog, content: "initial content")
+      sign_in subblog.user
+      patch :update, params: {
+        subblog_id: subblog.id,
+        id: blog.id,
+        blog: {
+          content: "New content"
+        }
+      }
+      expect(response).to have_http_status(:found)
+      blog.reload
+      expect(blog.content).to eq "New content"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog, content: "initial content")
+      patch :update, params: {
+        subblog_id: subblog.id,
+        id: blog.id,
+        blog: {
+          content: "New content"
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "shouldn't let anyone else update the moderators blog posts" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog, content: "initial content")
+      user = FactoryBot.create(:user)
+      sign_in user
+      patch :update, params: {
+        subblog_id: subblog.id,
+        id: blog.id,
+        blog: {
+          content: "New content"
+        }
+      }
+      blog.reload
+      expect(blog.content).to eq "initial content"
     end
   end
 
