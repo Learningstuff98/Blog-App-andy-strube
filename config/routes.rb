@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :moderator do
     resources :subblogs, only: [:new, :create, :show] do
       resources :blogs, only: [:show, :destroy] do
-        resources :comments, only: [:destroy, :create, :edit] do
+        resources :comments, only: [:destroy, :create, :edit, :update] do
           resources :responses, only: [:destroy]
         end
       end

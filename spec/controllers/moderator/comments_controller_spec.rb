@@ -101,4 +101,57 @@ RSpec.describe Moderator::CommentsController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "comments#update action" do
+    it "should let moderators update their comments" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment, message: "initial message")
+      sign_in subblog.user
+      patch :update, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id,
+        comment: {
+          message: 'new message'
+        } 
+      }
+      expect(response).to have_http_status(:found)
+      comment.reload
+      expect(comment.message).to eq "new message"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment, message: "initial message")
+      patch :update, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id,
+        comment: {
+          message: 'new message'
+        } 
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let moderators update their comments" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment, message: "initial message")
+      user = FactoryBot.create(:user)
+      sign_in user
+      patch :update, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        id: comment.id,
+        comment: {
+          message: 'new message'
+        } 
+      }
+      comment.reload
+      expect(comment.message).to eq "initial message"
+    end
+  end
 end

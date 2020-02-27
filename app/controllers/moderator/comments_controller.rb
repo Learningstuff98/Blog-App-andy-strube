@@ -9,6 +9,16 @@ class Moderator::CommentsController < ApplicationController
     end
   end
 
+  def update
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.find(params[:blog_id])
+    @comment = Comment.find(params[:id])
+    if current_user == @subblog.user
+      @comment.update_attributes(comment_params)
+      redirect_to moderator_subblog_blog_path(@subblog, @blog)
+    end
+  end
+
   def destroy
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
