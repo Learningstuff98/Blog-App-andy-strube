@@ -41,4 +41,39 @@ RSpec.describe Moderator::BlogsController, type: :controller do
     end
   end
 
+  describe "Blogs#edit action" do
+    it "should let moderators get to the edit page for their blog posts" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      sign_in subblog.user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      get :edit, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let anyone else edit the moderators blog posts" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :edit, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
 end

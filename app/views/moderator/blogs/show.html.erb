@@ -18,8 +18,13 @@
   </div>
   <br/>
 
-  <%= link_to "as a moderator, delete this post", moderator_subblog_blog_path(@subblog, @blog), method: :delete, data: { confirm: "Are you sure that you want to delete #{@blog.user.username}'s blog post?" }, class: "btn btn-primary make-it-green" %>
-  <br/><br/>
+  <%= link_to "delete", moderator_subblog_blog_path(@subblog, @blog), method: :delete, data: { confirm: "Are you sure that you want to delete #{@blog.user.username}'s blog post?" }, class: "make-it-green" %>
+
+  <% if @blog.user == @subblog.user %>
+    <%= " | " %>
+    <%= link_to "edit", edit_moderator_subblog_blog_path(@subblog, @blog), class: "make-it-green" %>
+    <br/>
+  <% end %>
 
   <% if current_user == @subblog.user %>
     <div class="col-7 comment-form">
