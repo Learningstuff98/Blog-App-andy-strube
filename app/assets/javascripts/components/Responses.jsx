@@ -12,8 +12,8 @@ class Responses extends React.Component {
   }
 
   getCommentResponses() {
-    //axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
-    axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    axios.get('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
+    //axios.get('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id)
     .then((res) =>
       this.setResponsesInState(res)
     )
@@ -21,8 +21,12 @@ class Responses extends React.Component {
   }
 
   deleteResponseInstance(responseComment) {
-    //axios.delete('http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
-    axios.delete('https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    let moderatorNameSpaceUrlModifier = '';
+    if(this.props.is_moderator) {
+      moderatorNameSpaceUrlModifier = 'moderator';
+    }
+    axios.delete('http://localhost:3000/' + moderatorNameSpaceUrlModifier + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
+    //axios.delete('https://blog-app-andy-strube.herokuapp.com/' + moderatorNameSpaceUrlModifier + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id)
     .then(() => {
       this.getCommentResponses();
     })
@@ -30,8 +34,8 @@ class Responses extends React.Component {
   }
 
   setEditAndDeleteButtons(response) {
-    const url = 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
-    //const url = 'http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    const url = 'http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    //const url = 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
     let editAndDeleteButtons;
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
       editAndDeleteButtons = <div>
@@ -42,12 +46,18 @@ class Responses extends React.Component {
           <a href={url} className="make-it-green">edit</a>
         </button>
       </div>;
-    } else if(this.props.username === null && this.props.user_id === null) {
+    } else if(this.props.is_moderator) {
+      editAndDeleteButtons = <div>
+        <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
+          delete
+        </button>
+      </div>
+    } else if (this.props.username === null && this.props.user_id === null) {
       editAndDeleteButtons = <div></div>;
     } else {
       editAndDeleteButtons = <div></div>;
     }
-    return editAndDeleteButtons;
+    return editAndDeleteButtons; 
   }
 
   setModeratorIcon(username) {
@@ -71,7 +81,7 @@ class Responses extends React.Component {
         </div>   
         {response.response_message}
         {this.setEditAndDeleteButtons(response)}
-        <br/><br/>
+        <br/>
       </div>;
     });
     this.setState({
