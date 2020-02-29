@@ -22,6 +22,9 @@ class Moderator::BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
     @comment = Comment.new
+    if current_user != @subblog.user
+      render plain: 'Unauthorized', status: :unauthorized
+    end
   end
 
   def destroy

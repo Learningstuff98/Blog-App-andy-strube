@@ -9,6 +9,15 @@ RSpec.describe Moderator::BlogsController, type: :controller do
       get :show, params: { id: blog.id, subblog_id: subblog.id }
       expect(response).to have_http_status(:success)
     end
+
+    it "shouldn't allow non moderator users to get to the show page" do
+      subblog = FactoryBot.create(:subblog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      blog = FactoryBot.create(:blog)
+      get :show, params: { id: blog.id, subblog_id: subblog.id }
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 
   describe "blogs#destroy action" do
