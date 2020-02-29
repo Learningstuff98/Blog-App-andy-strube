@@ -33,6 +33,8 @@ class Moderator::BlogsController < ApplicationController
     if current_user == @subblog.user
       @blog.update_attributes(blog_params)
       redirect_to moderator_subblog_blog_path(@subblog, @blog)
+    else
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 

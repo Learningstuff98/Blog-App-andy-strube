@@ -115,7 +115,7 @@ RSpec.describe Moderator::BlogsController, type: :controller do
       expect(response).to redirect_to new_user_session_path
     end
 
-    it "shouldn't let anyone else update the moderators blog posts" do
+    it "shouldn't let a non moderator user update blog posts" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog, content: "initial content")
       user = FactoryBot.create(:user)
@@ -127,6 +127,7 @@ RSpec.describe Moderator::BlogsController, type: :controller do
           content: "New content"
         }
       }
+      expect(response).to have_http_status(:unauthorized)
       blog.reload
       expect(blog.content).to eq "initial content"
     end
