@@ -1,6 +1,14 @@
 class Moderator::BlogsController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @subblog = Subblog.find(params[:subblog_id])
+    @blog = Blog.new
+    if current_user != @subblog.user
+      render plain: 'Unauthorized', status: :unauthorized 
+    end
+  end
+
   def edit
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])

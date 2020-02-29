@@ -3,6 +3,11 @@
   <h2><%= @subblog.description %></h2>
   <h2><%= "#{@subblog.user.username}, you're currently in moderator mode for this subblog" %></h2>
 
+  <% if current_user == @subblog.user%>
+    <%= link_to "As a moderator, post a new blog for the #{@subblog.name} subblog", new_moderator_subblog_blog_path(@subblog), class: "btn btn-primary make-it-green" %>
+    <br/><br/>
+  <% end %>
+
   <div class="pagination">
     <% if @blogs.previous_page %>
       <%= link_to "< Previous [", params.permit(:page).merge(:page => @blogs.previous_page ) %>

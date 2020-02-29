@@ -132,4 +132,17 @@ RSpec.describe Moderator::BlogsController, type: :controller do
     end
   end
 
+  describe "blogs#new action" do
+    it "should successfully show the page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      sign_in subblog.user
+      get :new, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end
