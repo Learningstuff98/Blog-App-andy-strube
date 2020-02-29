@@ -143,6 +143,75 @@ RSpec.describe Moderator::BlogsController, type: :controller do
       }
       expect(response).to have_http_status(:success)
     end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      get :new, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let a moderator get to this new blog page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :new, params: {
+        subblog_id: subblog.id,
+        id: blog.id
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe "Blogs#create action" do
+    it "should let moderators post blogs" do
+      subblog = FactoryBot.create(:subblog)
+      user = FactoryBot.create(:user)
+      sign_in subblog.user
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog: {
+          title: 'blog title',
+          content: 'blog content'
+        }
+      }
+      expect(response).to have_http_status(:found)
+      expect(subblog.blogs.length).to eq 1
+      expect(subblog.blogs.first.title).to eq "blog title"
+      expect(subblog.blogs.first.content).to eq "blog content"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      user = FactoryBot.create(:user)
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog: {
+          title: 'blog title',
+          content: 'blog content'
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let moderator users post blogs" do
+      subblog = FactoryBot.create(:subblog)
+      user = FactoryBot.create(:user)
+      user = FactoryBot.create(:user)
+      sign_in user
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog: {
+          title: 'blog title',
+          content: 'blog content'
+        }
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
   end
 
 end
