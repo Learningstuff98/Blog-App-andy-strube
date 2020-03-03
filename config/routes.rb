@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :subblogs, only: [:new, :create, :show] do
       resources :blogs, only: [:show, :destroy, :edit, :update, :new, :create] do
         resources :comments, only: [:destroy, :create, :edit, :update] do
-          resources :responses, only: [:destroy]
+          resources :responses, only: [:destroy, :new]
         end
       end
     end

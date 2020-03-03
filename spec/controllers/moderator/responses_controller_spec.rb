@@ -47,4 +47,51 @@ RSpec.describe Moderator::ResponsesController, type: :controller do
       expect(response_comment.response_message).to eq "response message"
     end
   end
+
+  describe "response#new action" do
+    it "should successfully load the page" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      response_comment = FactoryBot.create(:response)
+      sign_in subblog.user
+      get :new, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: response_comment.id
+      }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      response_comment = FactoryBot.create(:response)
+      get :new, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: response_comment.id
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "should only let moderators get to the new response form" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      response_comment = FactoryBot.create(:response)
+      user = FactoryBot.create(:user)
+      sign_in user
+      get :new, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        id: response_comment.id
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
