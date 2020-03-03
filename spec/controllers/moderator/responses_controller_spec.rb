@@ -94,4 +94,56 @@ RSpec.describe Moderator::ResponsesController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "responses#create action" do
+    it "should let moderators post responses" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      sign_in subblog.user
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        response: {
+          response_message: 'this is a reply'
+        }
+      }
+      expect(response).to have_http_status(:found)
+      expect(comment.responses.length).to eq 1
+      expect(comment.responses.first.response_message).to eq "this is a reply"
+    end
+
+    it "should require that a user be logged in" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        response: {
+          response_message: 'this is a reply'
+        }
+      }
+      expect(response).to redirect_to new_user_session_path
+    end
+
+    it "Should only let moderators post responses" do
+      subblog = FactoryBot.create(:subblog)
+      blog = FactoryBot.create(:blog)
+      comment = FactoryBot.create(:comment)
+      user = FactoryBot.create(:user)
+      sign_in user
+      post :create, params: {
+        subblog_id: subblog.id,
+        blog_id: blog.id,
+        comment_id: comment.id,
+        response: {
+          response_message: 'this is a reply'
+        }
+      }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end

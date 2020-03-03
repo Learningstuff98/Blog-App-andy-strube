@@ -1,1 +1,11 @@
-<h1>This is the new response page for moderators</h1>
+<div class="container">
+  <div class="box col-10">
+    <h2>Add a response to the following message:</h2>
+    <h4><%= @comment.message %></h4>
+    <h4><%= " by #{@comment.user.username}" %></h4>
+    <%= simple_form_for @response, url: moderator_subblog_blog_comment_responses_path(@subblog, @blog, @comment) do |f|%>
+      <%= f.input :response_message %>
+      <%= f.submit 'Post', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
