@@ -193,26 +193,4 @@ RSpec.describe Moderator::ResponsesController, type: :controller do
       expect(response).to have_http_status(:unauthorized)
     end
   end
-
-  describe "responses#update action" do
-    it "should let moderator users update their responses" do
-      subblog = FactoryBot.create(:subblog)
-      blog = FactoryBot.create(:blog)
-      comment = FactoryBot.create(:comment)
-      response_comment = FactoryBot.create(:response)
-      sign_in subblog.user
-      post :update, params: {
-        comment_id: comment.id,
-        subblog_id: subblog.id,
-        blog_id: blog.id,
-        id: response_comment.id,
-        response_comment: {
-          response_message: "updated response message"
-        }
-      }
-      response_comment.reload
-      expect(response_comment.response_message).to eq "updated response message"
-      expect(response).to have_http_status(:found)
-    end
-  end
 end
