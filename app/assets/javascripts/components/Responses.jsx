@@ -93,8 +93,16 @@ class Responses extends React.Component {
           [M]
         </span>
       );
-    } else {
-      return this.placeEmptyDivs();
+    }
+  }
+
+  setOrigionalPosterIcon(username) {
+    if(username === this.props.op_username) {
+      return(
+        <span className="make-it-blue">
+          [OP]
+        </span>
+      );
     }
   }
 
@@ -103,7 +111,8 @@ class Responses extends React.Component {
       return <div className="col-7">
         <div className="make-it-green">
           {response.username}{" "}
-          {this.setModeratorIcon(response.username)}
+          {this.setModeratorIcon(response.username)}{" "}
+          {this.setOrigionalPosterIcon(response.username)}
         </div>   
         {response.response_message}
         {this.setEditAndDeleteButtons(response)}

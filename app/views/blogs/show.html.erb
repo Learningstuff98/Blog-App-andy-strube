@@ -45,10 +45,10 @@
       <% if comment.user == @subblog.user %>
         <%= link_to "[M]", user_path(comment.user), class: "make-it-blue" %>
       <% end %>
-      <%= "#{comment.time_since_post}" %>
       <% if comment.user == @blog.user %>
-        <%= " by the blog author" %>
+        <%= link_to "[OP]", user_path(comment.user), class: "make-it-blue" %>
       <% end %>
+      <%= "#{comment.time_since_post}" %>
       <br/>
     </div>
     <div class="comment col-7">
@@ -61,13 +61,13 @@
         <%= link_to "edit", edit_subblog_blog_comment_path(@subblog, @blog, comment), class: "make-it-green" %>
         <%= " | " %>
         <%= link_to "reply", new_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
-        <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id, moderator_username: @subblog.user.username }) %>
+        <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id, moderator_username: @subblog.user.username, op_username: @blog.user.username }) %>
       </div>
     <% elsif current_user %>
       <%= link_to "reply", new_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
-      <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id, moderator_username: @subblog.user.username }) %>
+      <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, username: current_user.username, user_id: current_user.id, moderator_username: @subblog.user.username, op_username: @blog.user.username }) %>
     <% else %>
-      <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username }) %>
+      <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username, op_username: @blog.user.username }) %>
     <% end %>
     <br/><br/>
   <% end %>

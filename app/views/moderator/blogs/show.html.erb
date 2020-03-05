@@ -43,10 +43,10 @@
       <% if comment.user == @subblog.user %>
         <%= link_to "[M]", user_path(comment.user), class: "make-it-blue" %>
       <% end %>
-      <%= "#{comment.time_since_post}" %>
       <% if comment.user == @blog.user %>
-        <%= " by the blog author" %>
+        <%= link_to "[OP]", user_path(comment.user), class: "make-it-blue" %>
       <% end %>
+      <%= "#{comment.time_since_post}" %>
       <br/>
     </div>
 
@@ -65,7 +65,7 @@
       <%= " | " %>
       <%= link_to "reply", new_moderator_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
     <% end %>
-    <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username, user_id: @subblog.user.id, is_moderator: true }) %>
+    <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username, user_id: @subblog.user.id, is_moderator: true, op_username: @blog.user.username }) %>
     <br/><br/>
   <% end %>
 
