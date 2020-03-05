@@ -2,6 +2,14 @@ class Moderator::ResponsesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:destroy]
   before_action :authenticate_user!
 
+  def edit
+    @subblog = Subblog.find(params[:subblog_id])
+    @response = Response.find(params[:id])
+    if current_user != @subblog.user
+      render plain: 'Unauthorized', status: :unauthorized
+    end
+  end
+
   def new
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])

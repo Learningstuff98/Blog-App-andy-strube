@@ -62,8 +62,8 @@ class Responses extends React.Component {
   }
 
   buildUrlForEditLink(response) {
-    //return 'http://localhost:3000/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
-    return 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    //return 'http://localhost:3000/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    return 'https://blog-app-andy-strube.herokuapp.com/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
   }
 
   placeEmptyDivs() {
@@ -75,7 +75,10 @@ class Responses extends React.Component {
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
       return(<div>{this.addDeleteButton(response)}{this.addEditButton(url)}</div>);
     } else if(this.props.is_moderator) {
-      return this.addDeleteButton(response);
+      if(this.props.moderator_username === response.username && this.props.user_id === response.user_id) {
+        return(<div>{this.addDeleteButton(response)}{this.addEditButton(url)}</div>);
+      }
+      return <div>{this.addDeleteButton(response)}</div>
     } else if(this.props.username === null && this.props.user_id === null) {
       return this.placeEmptyDivs();
     } else {

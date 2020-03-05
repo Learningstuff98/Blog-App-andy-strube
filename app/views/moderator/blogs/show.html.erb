@@ -65,7 +65,7 @@
       <%= " | " %>
       <%= link_to "reply", new_moderator_subblog_blog_comment_response_path(@subblog, @blog, comment), class: "make-it-green" %>
     <% end %>
-    <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username, is_moderator: true }) %>
+    <%= react_component("Responses", { subblog_id: @subblog.id, blog_id: @blog.id, comment_id: comment.id, moderator_username: @subblog.user.username, user_id: @subblog.user.id, is_moderator: true }) %>
     <br/><br/>
   <% end %>
 
