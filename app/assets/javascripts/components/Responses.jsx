@@ -47,7 +47,7 @@ class Responses extends React.Component {
 
   addDeleteButton(response) {
     return(
-      <span onClick={() => this.deleteResponseInstance(response)} className="response-delete-button make-it-green btn-link">
+      <span onClick={() => this.deleteResponseInstance(response)} className="response-hover make-it-green btn-link">
         delete
       </span>
     );
@@ -138,23 +138,25 @@ class Responses extends React.Component {
   render() {
     if(this.state.responsesAreToBeViewed) {
       return(
+      <div>
         <div className="response">
           <br/>
           {this.state.responses.map((response) => {
             return response;
           })}
-          <button className="make-it-green btn btn-link response-button" onClick={() => this.invertResponseViewStatus()}>
-            hide replies
-          </button>
         </div>
+        <span className="make-it-green btn-link response-hover" onClick={() => this.invertResponseViewStatus()}>
+          hide replies
+        </span>
+      </div>
       );
     } else if(this.state.responses.length > 0) {
       return(
         <div>
           <div className="make-it-green">Total replies: {this.state.responses.length}</div>
-          <button className="make-it-green btn btn-link response-button" onClick={() => this.invertResponseViewStatus()}>
+          <span className="make-it-green btn-link response-hover" onClick={() => this.invertResponseViewStatus()}>
             view replies
-          </button>
+          </span>
         </div>
       );
     } else {

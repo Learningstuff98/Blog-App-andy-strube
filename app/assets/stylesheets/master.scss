@@ -108,14 +108,10 @@ body {
   margin-left: 20px;
 }
 
-.response-button {
-  margin-left: -15px;
+.response-hover:hover {
+  cursor: pointer;
 }
 
 .make-it-blue {
   color: rgb(14, 73, 168);
-}
-
-.response-delete-button:hover {
-  cursor: pointer;
 }
