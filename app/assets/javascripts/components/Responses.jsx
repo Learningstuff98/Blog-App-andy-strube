@@ -106,13 +106,18 @@ class Responses extends React.Component {
     }
   }
 
+  buildUrlForUserShowPageLink(user_id) {
+    //return 'http://localhost:3000/users/' + String(user_id);
+    return 'https://blog-app-andy-strube.herokuapp.com/users/' + String(user_id);
+  }
+
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
       return <div className="col-7">
         <div className="make-it-green">
-          {response.username}{" "}
-          {this.setModeratorIcon(response.username)}{" "}
-          {this.setOrigionalPosterIcon(response.username)}
+          <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{response.username}</a>{" "}
+          <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{this.setModeratorIcon(response.username)}</a>{" "}
+          <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{this.setOrigionalPosterIcon(response.username)}</a>
         </div>   
         {response.response_message}
         {this.setEditAndDeleteButtons(response)}
