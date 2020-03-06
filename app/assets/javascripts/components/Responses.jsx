@@ -47,17 +47,17 @@ class Responses extends React.Component {
 
   addDeleteButton(response) {
     return(
-      <button onClick={() => this.deleteResponseInstance(response)} className="btn btn-link make-it-green">
+      <span onClick={() => this.deleteResponseInstance(response)} className="response-delete-button make-it-green btn-link">
         delete
-      </button>
+      </span>
     );
   }
 
   addEditButton(url) {
     return(
-      <button className="btn btn-link">
-        <a href={url} className="make-it-green">edit</a>
-      </button>
+      <span>
+        <a href={url} className="make-it-green btn-link">edit</a>
+      </span>
     );
   }
 
@@ -73,10 +73,10 @@ class Responses extends React.Component {
   setEditAndDeleteButtons(response) {
     const url = this.buildUrlForEditLink(response);
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
-      return(<div>{this.addDeleteButton(response)}{this.addEditButton(url)}</div>);
+      return(<div>{this.addDeleteButton(response)}{" | "}{this.addEditButton(url)}</div>);
     } else if(this.props.is_moderator) {
       if(this.props.moderator_username === response.username && this.props.user_id === response.user_id) {
-        return(<div>{this.addDeleteButton(response)}{this.addEditButton(url)}</div>);
+        return(<div>{this.addDeleteButton(response)}{" | "}{this.addEditButton(url)}</div>);
       }
       return <div>{this.addDeleteButton(response)}</div>
     } else if(this.props.username === null && this.props.user_id === null) {
