@@ -39,6 +39,9 @@ class CommentsController < ApplicationController
 
   def show
     comment = Comment.find(params[:id])
+    comment.responses.each do |response|
+      response.update_attribute(:time_since, response.time_since_post)
+    end
     render json: comment.responses.as_json()
   end
 

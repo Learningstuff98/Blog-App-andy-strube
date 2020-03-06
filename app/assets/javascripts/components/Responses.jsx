@@ -114,11 +114,12 @@ class Responses extends React.Component {
   setResponsesInState(res) {
     const responses =  res.data.map((response) => {
       return <div className="col-7">
-        <div className="make-it-green">
+        <div>
           <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{response.username}</a>{" "}
           <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{this.setModeratorIcon(response.username)}</a>{" "}
-          <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{this.setOrigionalPosterIcon(response.username)}</a>
-        </div>   
+          <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{this.setOrigionalPosterIcon(response.username)}</a>{" "}
+          {response.time_since}
+        </div>
         {response.response_message}
         {this.setEditAndDeleteButtons(response)}
         <br/>
