@@ -1,0 +1,2 @@
+module Moderator::LocksHelper
+end

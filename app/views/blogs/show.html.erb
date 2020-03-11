@@ -3,6 +3,8 @@
   <br/><br/>
 
   <h5><%= "Moderator: #{@subblog.user.username}" %></h5>
+  <%= react_component("LockPost", lock_id: @lock.id) %>
+  <br/>
   <h1><%= @blog.title %></h1>
 
   <div class="user-profile-link">

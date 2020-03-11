@@ -4,6 +4,8 @@
   <h2><%= "#{@subblog.user.username}, you're currently in moderator mode for the #{@subblog.name} subblog" %></h2>
   <br/>
 
+  <%= react_component("LockPost", lock_id: @lock.id, is_moderator: true ) %>
+
   <h1><%= @blog.title %></h1>
   <div class="user-profile-link">
     <%= "#{@blog.time_since_post} by " %>
