@@ -66,7 +66,7 @@ class LockPost extends React.Component {
     let lockedNotice;
     if(this.state.is_locked) {
       lockedNotice = <div className='make-it-green'>
-        <h3>This post is locked. You won't be able to comment</h3>
+        <h3>This post is locked. You won't be able to comment Ps: If anyone is viewing this, I haven't locked the comments for locked posts yet</h3>
         <br/>
       </div>
     }
