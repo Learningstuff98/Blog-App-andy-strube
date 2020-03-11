@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :locks, only: [:show, :update]
   end
   resources :subblogs, only: [:index, :show] do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy] do

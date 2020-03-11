@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :lock do
+    
+  end
+
   factory :response do
     response_message {"response message"}
     association :user

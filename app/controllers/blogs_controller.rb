@@ -8,6 +8,7 @@ class BlogsController < ApplicationController
   def create
     @subblog = Subblog.find(params[:subblog_id])
     @blog = @subblog.blogs.create(blog_params.merge(user: current_user))
+    @lock = @blog.locks.create()
     if @blog.valid?
       redirect_to subblog_blog_path(@subblog, @blog)
     else
@@ -44,6 +45,7 @@ class BlogsController < ApplicationController
   def show
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
+    @lock = @blog.locks.last
     @comment = Comment.new
   end
 
