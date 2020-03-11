@@ -46,8 +46,12 @@ class ResponsesController < ApplicationController
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:comment_id])
     @response = @comment.responses.create(response_params.merge(user: current_user))
-    @response.update_attribute(:username, @response.user.username)
-    redirect_to subblog_blog_path(@subblog, @blog)
+    if @response.valid?
+      redirect_to subblog_blog_path(@subblog, @blog)
+      @response.update_attribute(:username, @response.user.username)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

@@ -38,8 +38,12 @@ class Moderator::ResponsesController < ApplicationController
     @comment = Comment.find(params[:comment_id])
     if current_user == @subblog.user
       @response = @comment.responses.create(response_params.merge(user: current_user))
-      @response.update_attribute(:username, @response.user.username)
-      redirect_to moderator_subblog_blog_path(@subblog, @blog)
+      if @response.valid?
+        @response.update_attribute(:username, @response.user.username)
+        redirect_to moderator_subblog_blog_path(@subblog, @blog)
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
       render plain: 'Unauthorized', status: :unauthorized
     end
