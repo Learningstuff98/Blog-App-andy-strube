@@ -13,7 +13,12 @@ class Moderator::BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     if current_user == @subblog.user
       @blog = @subblog.blogs.create(blog_params.merge(user: current_user))
-      redirect_to moderator_subblog_blog_path(@subblog, @blog)
+      if @blog.valid?
+        @lock = @blog.locks.create()
+        redirect_to moderator_subblog_blog_path(@subblog, @blog)
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
       render plain: 'Unauthorized', status: :unauthorized
     end

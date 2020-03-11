@@ -8,8 +8,8 @@ class BlogsController < ApplicationController
   def create
     @subblog = Subblog.find(params[:subblog_id])
     @blog = @subblog.blogs.create(blog_params.merge(user: current_user))
-    @lock = @blog.locks.create()
     if @blog.valid?
+      @lock = @blog.locks.create()
       redirect_to subblog_blog_path(@subblog, @blog)
     else
       render :new, status: :unprocessable_entity
