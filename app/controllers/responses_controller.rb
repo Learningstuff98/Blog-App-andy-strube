@@ -39,18 +39,27 @@ class ResponsesController < ApplicationController
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:comment_id])
     @response = Response.new
+    @lock = @blog.locks.last
+    if @lock.is_locked
+      render plain: 'Unauthorized', status: :unauthorized
+    end
   end
 
   def create
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:comment_id])
-    @response = @comment.responses.create(response_params.merge(user: current_user))
-    if @response.valid?
-      redirect_to subblog_blog_path(@subblog, @blog)
-      @response.update_attribute(:username, @response.user.username)
+    @lock = @blog.locks.last
+    if !@lock.is_locked
+      @response = @comment.responses.create(response_params.merge(user: current_user))
+      if @response.valid?
+        redirect_to subblog_blog_path(@subblog, @blog)
+        @response.update_attribute(:username, @response.user.username)
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
