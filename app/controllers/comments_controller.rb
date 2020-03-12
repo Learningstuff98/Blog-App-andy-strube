@@ -26,8 +26,10 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:id])
-    if current_user != @comment.user
+    @lock = @blog.locks.last
+    if current_user != @comment.user || @lock.is_locked
       render plain: 'Unauthorized', status: :unauthorized
     end
   end
@@ -36,9 +38,12 @@ class CommentsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:id])
-    if current_user == @comment.user
+    @lock = @blog.locks.last
+    if current_user == @comment.user && !@lock.is_locked
       @comment.update_attributes(comment_params)
       redirect_to subblog_blog_path(@subblog, @blog)
+    else
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
