@@ -4,8 +4,13 @@ class CommentsController < ApplicationController
   def create
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
-    @comment = @blog.comments.create(comment_params.merge(user: current_user))
-    redirect_to subblog_blog_path(@subblog, @blog)
+    @lock = @blog.locks.last
+    if !@lock.is_locked
+      @comment = @blog.comments.create(comment_params.merge(user: current_user))
+      redirect_to subblog_blog_path(@subblog, @blog)
+    else
+      render plain: 'Unauthorized', status: :unauthorized
+    end
   end
 
   def destroy

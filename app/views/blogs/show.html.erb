@@ -28,19 +28,23 @@
     <% end %>
   <% end %>
 
-  <% if current_user %>
+  <% if current_user && !@lock.is_locked %>
     <div class="col-7 comment-form">
       <br/>
-      <%= simple_form_for @comment, url: subblog_blog_comments_path(@subblog, @blog) do |f|%>
+      <%= simple_form_for @comment, url: subblog_blog_comments_path(@subblog, @blog) do |f| %>
         <%= f.input :message, label: "Total comments: #{@blog.comments.count}", placeholder: "Add a comment" %>
         <%= f.submit 'Post Comment', class: 'btn btn-primary make-it-green' %>
       <% end %>
     </div>
     <br/>
+  <% elsif !@lock.is_locked %>
+    <br/>
+    <h3><%= link_to "Login to post comments", new_user_session_path, class: "make-it-green" %></h3>
+    <br/>
   <% else %>
     <br/>
-    <h3>Login to post comments</h3>
-    <br/>
+    <h3>This post is locked. You won't be able to comment</h3>
+    <br/>  
   <% end %>
 
   <% @blog.comments.each do |comment| %>
