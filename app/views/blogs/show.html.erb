@@ -22,8 +22,10 @@
   <% if current_user == @blog.user %>
     <br/>
     <%= link_to "delete", subblog_blog_path(@subblog, @blog), method: :delete, data: { confirm: "Are you sure that you want to delete this blog post?" }, class: "make-it-green" %>
-    <%= " | " %>
-    <%= link_to "edit", edit_subblog_blog_path(@subblog, @blog), class: "make-it-green" %>
+    <% if !@lock.is_locked %>
+      <%= " | " %>
+      <%= link_to "edit", edit_subblog_blog_path(@subblog, @blog), class: "make-it-green" %>
+    <% end %>
   <% end %>
 
   <% if current_user %>
