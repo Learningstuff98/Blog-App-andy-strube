@@ -1,6 +1,8 @@
 <div class="page-content">
   <%= link_to "Go to the #{@subblog.name} subblog", subblog_path(@subblog), class: "btn btn-primary make-it-green" %>
   <br/><br/>
+  <%= link_to "Go to the moderator area of the #{@subblog.name} subblog", moderator_subblog_path(@subblog), class: "btn btn-primary make-it-green" %>
+  <br/><br/>
   <h2><%= "#{@subblog.user.username}, you're currently in moderator mode for the #{@subblog.name} subblog" %></h2>
   <br/>
 

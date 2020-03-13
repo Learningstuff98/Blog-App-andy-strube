@@ -30,7 +30,9 @@ class ResponsesController < ApplicationController
 
   def destroy
     response = Response.find(params[:id])
-    if current_user == response.user
+    blog = Blog.find(params[:blog_id])
+    lock = blog.locks.last
+    if current_user == response.user && !lock.is_locked
       response.destroy
     end
   end
