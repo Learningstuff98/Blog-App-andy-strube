@@ -72,6 +72,7 @@ class Responses extends React.Component {
 
   setEditAndDeleteButtons(response) {
     const url = this.buildUrlForEditLink(response);
+    // if(this.props.username === response.username && this.props.user_id === response.user_id && !this.props.is_locked) {
     if(this.props.username === response.username && this.props.user_id === response.user_id) {
       return(<div>{this.addDeleteButton(response)}{" | "}{this.addEditButton(url)}</div>);
     } else if(this.props.is_moderator) {

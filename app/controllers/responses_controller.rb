@@ -7,7 +7,8 @@ class ResponsesController < ApplicationController
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.find(params[:comment_id])
     @response = Response.find(params[:id])
-    if current_user != @response.user
+    @lock = @blog.locks.last
+    if current_user != @response.user || @lock.is_locked
       render plain: 'Unauthorized', status: :unauthorized
     end
   end
@@ -16,9 +17,14 @@ class ResponsesController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
     @response = Response.find(params[:id])
-    if current_user == @response.user
-      @response.update_attributes(response_params)
-      redirect_to subblog_blog_path(@subblog, @blog)
+    @lock = @blog.locks.last
+    if !@lock.is_locked
+      if current_user == @response.user
+        @response.update_attributes(response_params)
+        redirect_to subblog_blog_path(@subblog, @blog)
+      end
+    else
+      render plain: 'Unauthorized', status: :unauthorized
     end
   end
 
