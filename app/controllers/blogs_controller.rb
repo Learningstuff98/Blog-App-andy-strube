@@ -42,6 +42,7 @@ class BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
     if @blog.user == current_user
+      @blog.clear_comments(@blog.comments)
       @blog.destroy
       redirect_to subblog_path(@subblog)
     end

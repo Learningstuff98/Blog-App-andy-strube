@@ -57,6 +57,7 @@ class Moderator::BlogsController < ApplicationController
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:id])
     if @subblog.user == current_user
+      @blog.clear_comments(@blog.comments)
       @blog.destroy
       redirect_to moderator_subblog_path(@subblog)
     end

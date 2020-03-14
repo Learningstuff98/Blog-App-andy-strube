@@ -7,6 +7,19 @@ class Blog < ApplicationRecord
   validates :title, presence: true, length: { minimum: 1 }
   validates :content, presence: true, length: { minimum: 1 }
 
+  def clear_responses(comment)
+    comment.responses.each do |response|
+      response.destroy
+    end
+  end
+
+  def clear_comments(comments)
+    comments.each do |comment|
+      self.clear_responses(comment)
+      comment.destroy
+    end
+  end
+
   def time_since_post
     seconds = (Time.now - self.created_at).to_i
     minutes = (seconds / 60).to_i

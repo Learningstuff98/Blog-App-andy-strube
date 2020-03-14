@@ -19,6 +19,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @lock = @blog.locks.last
     if @comment.user == current_user && !@lock.is_locked
+      @comment.clear_responses(@comment.responses)
       @comment.destroy
       redirect_to subblog_blog_path(@subblog, @blog)
     else

@@ -5,6 +5,12 @@ class Comment < ApplicationRecord
 
   validates :message, presence: true, length: { minimum: 1 }
 
+  def clear_responses(responses)
+    responses.each do |response|
+      response.destroy
+    end
+  end
+
   def time_since_post
     seconds = (Time.now - self.created_at).to_i
     minutes = (seconds / 60).to_i
