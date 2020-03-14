@@ -45,20 +45,18 @@ class LockPost extends React.Component {
   }
 
   invertLockedStatusButton() {
+    let lockAction;
     if(this.props.is_moderator) {
       if(this.state.is_locked) {
-        return(
-          <div onClick={() => this.invertLockedStatus()} className="btn btn-primary make-it-green">
-            Unlock Post
-          </div>
-        )
+        lockAction = 'Unlock';
       } else {
-        return(
-          <div onClick={() => this.invertLockedStatus()} className="btn btn-primary make-it-green">
-            Lock Post
-          </div>
-        )
+        lockAction = 'Lock';
       }
+      return(
+        <div onClick={() => this.invertLockedStatus()} className="btn btn-primary make-it-green">
+          {lockAction} Post
+        </div>
+      )
     }
   }
 

@@ -107,8 +107,8 @@ class Responses extends React.Component {
   }
 
   buildUrlForUserShowPageLink(user_id) {
-    //return 'http://localhost:3000/users/' + String(user_id);
-    return 'https://blog-app-andy-strube.herokuapp.com/users/' + String(user_id);
+    //return 'http://localhost:3000/users/' + user_id;
+    return 'https://blog-app-andy-strube.herokuapp.com/users/' + user_id;
   }
 
   setResponsesInState(res) {
@@ -139,17 +139,17 @@ class Responses extends React.Component {
   render() {
     if(this.state.responsesAreToBeViewed) {
       return(
-      <div>
-        <div className="response">
-          <br/>
-          {this.state.responses.map((response) => {
-            return response;
-          })}
+        <div>
+          <div className="response">
+            <br/>
+            {this.state.responses.map((response) => {
+              return response;
+            })}
+          </div>
+          <span className="make-it-green btn-link response-hover" onClick={() => this.invertResponseViewStatus()}>
+            hide replies
+          </span>
         </div>
-        <span className="make-it-green btn-link response-hover" onClick={() => this.invertResponseViewStatus()}>
-          hide replies
-        </span>
-      </div>
       );
     } else if(this.state.responses.length > 0) {
       return(
