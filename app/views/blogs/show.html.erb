@@ -5,6 +5,23 @@
   <h5><%= "Moderator: #{@subblog.user.username}" %></h5>
   <%= react_component("LockPost", lock_id: @lock.id) %>
   <br/>
+
+  <% if current_user == @blog.user %>
+    <%= simple_form_for @photo, url: subblog_blog_photos_path(@subblog, @blog) do |f| %>
+      <%= f.input :caption %>
+      <%= f.submit "Add this Photo", class: 'btn btn-primary' %>
+    <% end %>
+    <br/>
+  <% end %>
+
+  <% @blog.photos.each do |photo| %>
+    <div>
+      <%= photo.caption %>
+    </div>
+  <% end %>
+
+  <br/>
+
   <h1><%= @blog.title %></h1>
 
   <div class="user-profile-link">

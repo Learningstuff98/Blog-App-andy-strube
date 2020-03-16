@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :login
+  has_many :photos
   has_many :subblogs
   has_many :blogs
   has_many :comments

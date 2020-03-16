@@ -3,6 +3,7 @@ class Blog < ApplicationRecord
   belongs_to :user
   has_many :comments
   has_many :locks
+  has_many :photos
 
   validates :title, presence: true, length: { minimum: 1 }
   validates :content, presence: true, length: { minimum: 1 }

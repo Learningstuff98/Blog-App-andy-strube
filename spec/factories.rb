@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :photo do
+    
+  end
+
   factory :lock do
     
   end

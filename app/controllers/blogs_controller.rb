@@ -53,6 +53,7 @@ class BlogsController < ApplicationController
     @blog = Blog.find(params[:id])
     @lock = @blog.locks.last
     @comment = Comment.new
+    @photo = Photo.new
   end
 
   private
