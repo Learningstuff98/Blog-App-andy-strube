@@ -7,16 +7,22 @@
   <br/>
 
   <% if current_user == @blog.user %>
-    <%= simple_form_for @photo, url: subblog_blog_photos_path(@subblog, @blog) do |f| %>
-      <%= f.input :caption %>
-      <%= f.submit "Add this Photo", class: 'btn btn-primary' %>
-    <% end %>
+    <div class="col-7 comment-form">
+      <%= simple_form_for @photo, url: subblog_blog_photos_path(@subblog, @blog) do |f| %>
+        <%= f.input :caption %>
+        <%= f.input :picture %>
+        <%= f.submit "Add this Photo", class: 'btn btn-primary' %>
+      <% end %>
+    </div>
     <br/>
   <% end %>
 
   <% @blog.photos.each do |photo| %>
-    <div>
-      <%= photo.caption %>
+    <div class="make-it-green">
+      <h4><%= photo.caption %></h4>
+      <% if photo.picture.url %>
+        <%= image_tag photo.picture.url, class: 'place_image' %>
+      <% end %>
     </div>
   <% end %>
 
