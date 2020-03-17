@@ -7,13 +7,22 @@
   <br/>
 
   <% if current_user == @blog.user %>
-    <div class="col-7 comment-form">
-      <%= simple_form_for @photo, url: subblog_blog_photos_path(@subblog, @blog) do |f| %>
-        <%= f.input :caption %>
-        <%= f.input :picture %>
-        <%= f.submit "Add this Photo", class: 'btn btn-primary' %>
-      <% end %>
-    </div>
+    <% if !@lock.is_locked %>
+      <div class="col-7 comment-form">
+        <%= simple_form_for @photo, url: subblog_blog_photos_path(@subblog, @blog) do |f| %>
+          <%= f.input :caption %>
+          <%= f.input :picture %>
+          <%= f.submit "Post this Image", class: 'btn btn-primary make-it-green' %>
+        <% end %>
+      </div>
+    <% else %>
+      <h4 class="make-it-green">This post is locked. You won't be able to upload images</h4>
+    <% end %>
+    <br/>
+  <% end %>
+
+  <% if !current_user %>
+    <h4><%= link_to 'Login to post pictures with your blog posts', new_user_session_path, class: 'make-it-green' %></h4>
     <br/>
   <% end %>
 
@@ -21,7 +30,7 @@
     <div class="make-it-green">
       <h4><%= photo.caption %></h4>
       <% if photo.picture.url %>
-        <%= image_tag photo.picture.url, class: 'place_image' %>
+        <%= image_tag photo.picture.url, class: 'blog_image' %>
       <% end %>
     </div>
   <% end %>
