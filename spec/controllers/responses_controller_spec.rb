@@ -7,6 +7,8 @@ RSpec.describe ResponsesController, type: :controller do
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
       user = FactoryBot.create(:user)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in user
       get :new, params: {
         subblog_id: subblog.id,
@@ -30,11 +32,13 @@ RSpec.describe ResponsesController, type: :controller do
   end
 
   describe "responses#create action" do
-    it "should allow users to successfully create responses" do
+    it "should let users create responses" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
       user = FactoryBot.create(:user)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in user
       post :create, params: {
         subblog_id: subblog.id,
@@ -87,6 +91,8 @@ RSpec.describe ResponsesController, type: :controller do
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
       comment_response = FactoryBot.create(:response)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in comment_response.user
       delete :destroy, params: {
         subblog_id: subblog.id,
@@ -137,6 +143,8 @@ RSpec.describe ResponsesController, type: :controller do
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
       comment_response = FactoryBot.create(:response)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in comment_response.user
       get :edit, params: {
         subblog_id: subblog.id,

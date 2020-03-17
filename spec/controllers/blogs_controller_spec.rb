@@ -58,6 +58,8 @@ RSpec.describe BlogsController, type: :controller do
     it "should successfully show the page" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in blog.user
       get :edit, params: { id: blog.id, subblog_id: subblog.id }
       expect(response).to have_http_status(:success)
@@ -67,6 +69,8 @@ RSpec.describe BlogsController, type: :controller do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       user = FactoryBot.create(:user)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in user
       get :edit, params: { id: blog.id, subblog_id: subblog.id }
       expect(response).to have_http_status(:unauthorized)
@@ -84,6 +88,8 @@ RSpec.describe BlogsController, type: :controller do
     it "The user that posted the blog should be able to update it" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in blog.user
       patch :update, params: { 
         id: blog.id, 

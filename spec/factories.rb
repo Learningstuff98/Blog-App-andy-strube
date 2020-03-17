@@ -4,7 +4,8 @@ FactoryBot.define do
   end
 
   factory :lock do
-    
+    is_locked {false}
+    association :blog
   end
 
   factory :response do

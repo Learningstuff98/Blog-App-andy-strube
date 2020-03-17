@@ -14,6 +14,8 @@ RSpec.describe CommentsController, type: :controller do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       user = FactoryBot.create(:user)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in user
       post :create, params: { subblog_id: subblog.id, blog_id: blog.id, comment: { message: 'comment message' } }
       expect(response).to have_http_status(:found)
@@ -23,10 +25,12 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "comments#destroy action" do
-    it "should allow the person who posted the comment to delete it" do
+    it "should let the person who posted the comment delete it" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in comment.user
       delete :destroy, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
       expect(response).to have_http_status(:found)
@@ -58,6 +62,8 @@ RSpec.describe CommentsController, type: :controller do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in comment.user
       get :edit, params: { id: comment.id, subblog_id: subblog.id, blog_id: blog.id }
       expect(response).to have_http_status(:success)
@@ -83,10 +89,12 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "comments#update action" do
-    it "should allow users to update their comments" do
+    it "should let users update their comments" do
       subblog = FactoryBot.create(:subblog)
       blog = FactoryBot.create(:blog)
       comment = FactoryBot.create(:comment)
+      lock = FactoryBot.create(:lock)
+      blog.locks.push(lock)
       sign_in comment.user
       post :update, params: {
         id: comment.id,
