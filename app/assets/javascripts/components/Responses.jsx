@@ -111,8 +111,8 @@ class Responses extends React.Component {
     return 'https://blog-app-andy-strube.herokuapp.com/users/' + user_id;
   }
 
-  setResponsesInState(res) {
-    const responses =  res.data.map((response) => {
+  buildResponses(res) {
+    return res.data.map((response) => {
       return <div className="col-7">
         <div>
           <a href={this.buildUrlForUserShowPageLink(response.user_id)} className="make-it-green">{response.username}</a>{" "}
@@ -125,8 +125,11 @@ class Responses extends React.Component {
         <br/>
       </div>;
     });
+  }
+
+  setResponsesInState(res) {
     this.setState({
-      responses,
+      responses: this.buildResponses(res)
     });
   }
 
