@@ -17,7 +17,6 @@ class LockPost extends React.Component {
   }
 
   getLockedStatus() {
-    //axios.get('http://localhost:3000/moderator/locks/' + this.props.lock_id)
     axios.get('https://blog-app-andy-strube.herokuapp.com/moderator/locks/' + this.props.lock_id)
     .then((res) => {
       this.setLockedStatusInState(res);
@@ -31,7 +30,6 @@ class LockPost extends React.Component {
   }
 
   invertLockedStatusInTheDataBase() {
-    //axios.patch('http://localhost:3000/moderator/locks/' + this.props.lock_id, {
     axios.patch('https://blog-app-andy-strube.herokuapp.com/moderator/locks/' + this.props.lock_id, {
       is_locked: !this.state.is_locked
     })
