@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :blogs, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :photos, only: [:create]
       resources :comments, only: [:create, :destroy, :edit, :update, :show] do
-        resources :responses, only: [:new, :create, :show, :destroy, :edit, :update]
+        resources :responses, only: [:new, :create, :destroy, :edit, :update]
       end
     end
   end

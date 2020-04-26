@@ -68,23 +68,6 @@ RSpec.describe ResponsesController, type: :controller do
     end
   end
 
-  describe "responses#show action" do
-    it "should work" do
-      subblog = FactoryBot.create(:subblog)
-      blog = FactoryBot.create(:blog)
-      comment = FactoryBot.create(:comment)
-      response_comment = FactoryBot.create(:response)
-      sign_in response_comment.user
-      get :show, params: {
-        subblog_id: subblog.id,
-        blog_id: blog.id,
-        comment_id: comment.id,
-        id: response_comment.id
-      }
-      expect(response).to have_http_status(:success)
-    end
-  end
-
   describe "responses#destroy action" do
     it "should let the response's user delete it" do
       subblog = FactoryBot.create(:subblog)

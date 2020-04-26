@@ -37,11 +37,6 @@ class ResponsesController < ApplicationController
     end
   end
 
-  def show
-    response = Response.find(params[:id])
-    render json: response.as_json()
-  end
-
   def new
     @subblog = Subblog.find(params[:subblog_id])
     @blog = Blog.find(params[:blog_id])
