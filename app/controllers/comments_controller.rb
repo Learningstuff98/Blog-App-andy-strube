@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
     comment.responses.each do |response|
       response.update_attribute(:time_since, response.time_since_post)
     end
-    render json: comment.responses.as_json()
+    render json: comment.responses
   end
 
   private
