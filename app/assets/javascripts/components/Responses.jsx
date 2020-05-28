@@ -15,12 +15,18 @@ class Responses extends React.Component {
     return 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id;
   }
 
+  // getCommentResponses() {
+  //   axios.get(this.buildUrlForGettingResponses())
+  //   .then((res) =>
+  //     this.setResponsesInState(res)
+  //   )
+  //   .catch((err) => console.log(err.response.data));
+  // }
+
   getCommentResponses() {
-    axios.get(this.buildUrlForGettingResponses())
-    .then((res) =>
-      this.setResponsesInState(res)
-    )
-    .catch((err) => console.log(err.response.data));
+    $.get(this.buildUrlForGettingResponses()).success(function(data) {
+      this.setResponsesInState(data)
+    });
   }
 
   moderatorNameSpaceUrlModifier() {
