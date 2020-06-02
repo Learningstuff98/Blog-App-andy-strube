@@ -12,7 +12,7 @@ class Responses extends React.Component {
   }
 
   buildUrlForGettingResponses() {
-    return 'http://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id;
+    return 'https://blog-app-andy-strube.herokuapp.com/subblogs/' + this.props.subblog_id + '/blogs/' + this.props.blog_id + '/comments/' + this.props.comment_id;
   }
 
   getCommentResponses() {
@@ -32,7 +32,7 @@ class Responses extends React.Component {
   }
 
   buildUrlForDeleteButtons(responseComment) {
-    return 'http://blog-app-andy-strube.herokuapp.com/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id;
+    return 'https://blog-app-andy-strube.herokuapp.com/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + responseComment.id;
   }
 
   deleteResponseInstance(responseComment) {
@@ -60,7 +60,7 @@ class Responses extends React.Component {
   }
 
   buildUrlForEditLink(response) {
-    return 'http://blog-app-andy-strube.herokuapp.com/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
+    return 'https://blog-app-andy-strube.herokuapp.com/' + this.moderatorNameSpaceUrlModifier() + '/subblogs/' + this.props.subblog_id + '/blogs/'+ this.props.blog_id + '/comments/' + this.props.comment_id + '/responses/' + response.id + '/edit';
   }
 
   placeEmptyDivs() {
@@ -104,7 +104,7 @@ class Responses extends React.Component {
   }
 
   buildUrlForUserShowPageLink(user_id) {
-    return 'http://blog-app-andy-strube.herokuapp.com/users/' + user_id;
+    return 'https://blog-app-andy-strube.herokuapp.com/users/' + user_id;
   }
 
   buildResponses(res) {
