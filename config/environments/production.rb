@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: 'blogster-andy-strube.herokuapp.com', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'blog-app-andy-strube.herokuapp.com' }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
